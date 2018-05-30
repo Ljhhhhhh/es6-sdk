@@ -1,3 +1,5 @@
+import {$} from '../common/utils.js'
+
 const template = (opts = {}) => {
 
   const autocompleteTpl =
@@ -9,18 +11,19 @@ const template = (opts = {}) => {
   const showRemember = opts.showRemember ? 'block' : 'none';
   const autocompleteAdapter = opts.autocomplete ? '' : autocompleteTpl;
   const autocompleteValue = opts.autocomplete ? 'on' : 'off';
-
+/* <span class="account-label">${ opts.accountLabel }</span>    */
+// <span class="password-label">${ opts.passwordLabel }</span>
   const tpl = `<div id="login-wrapper">
             <p id="login-error" class="login-error"></p>
             <form id="login-form" onsubmit="return false">
                 ${ autocompleteAdapter }
                 <label class="login-accound-wrapper">
-                    <span class="account-label">${ opts.accountLabel }</span>
+                    <span class="account-label"></span>   
                     <input id="login-account" valid="present" name="account" type="text" placeholder="${ opts.accountPlaceHolder }" maxlength="${opts.accountMax}" autocomplete="${ opts.autocompleteValue }">
                     <span id="clear-account" class="del"></span>
                 </label>
                 <label class="login-password-wrapper">
-                    <span class="password-label">${ opts.passwordLabel }</span>
+                    <span class="password-label"></span>
                     <input id="login-password" valid="present" name="password" type="password" placeholder="${ opts.passwordPlaceHolder }" maxlength="${opts.passwordMax}" autocomplete="${ autocompleteValue }">
                 </label>
                 <label style="display: none" class="login-verify-wrapper">
@@ -45,16 +48,9 @@ const template = (opts = {}) => {
 
 export default (conf = {}) => {
   conf.container.innerHTML = template(conf);
+  const $noAutocomplete=$('no-autocomplete');
+  if($noAutocomplete){
+      $noAutocomplete.style.opacity='0';
+      $noAutocomplete.style.height='0';
+  }
 }
-
-
-
-
-// export default (container) => {
-//   const tpl= `<form id="form">
-//             <input id="input" name="uname" type="text">
-//             <input name="password" type="password">
-//             <input id="submit" value="登录" type="submit">
-//           </form>`;
-//   container.innerHTML=tpl;
-// }

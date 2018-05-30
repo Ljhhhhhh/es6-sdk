@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>注册-手机验证</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="apple-mobile-web-app-capable" content="no" />
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" type="text/css" href="../css/register.less" />
+</head>
+
+<body id="login">
+  @@include('./templates/header.html', {}) @@include('./templates/step.html', {"step": "2"})
+  <div id="container"></div>
+  @@include('./templates/footer.html', {})
+  <script type="text/javascript" src="../lib/vendors.js"></script>
+  <script type="text/javascript" src="../js/register/init.js"></script>
+  <script type="text/javascript">
+    var $container = document.getElementById('container');
+
+    function cleanDom(dom) {
+      var child = Array.from(dom.children);
+      for (var item of child) {
+        dom.replaceChild(child);
+        child = null;
+      }
+    }
+
+    function regPayment() {
+      pass.regInfo({
+        container: $container,
+        success: function () {
+          location.replace('register-success.html');
+        }
+      });
+    }
+
+    function regInfo() {
+      pass.regInfo({
+        container: $container,
+        success: function () {
+          cleanDom($container);
+          regPayment();
+        }
+      });
+    }
+    pass.regMoile({
+      container: $container,
+      success: function () {
+        $container.innerHTML = '';
+        regInfo();
+      }
+    });
+  </script>
+</body>
+
+</html>
